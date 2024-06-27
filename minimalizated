@@ -1,0 +1,21 @@
+import heapq
+
+nodes = {
+    "A" : [("B", 2), ("C", 9)],
+    "B" : [("D", 1), ("E", 5), ("F", 9), ("G", 2)],
+    "C" : [("G", 1), ("F", 2)],
+    "D" : [("H", 12), ("F", 8)],
+    "E" : [("C", 2)],
+    "F" : [("H", 12)],
+    "G" : [("E", 2), ("C", 5)],
+    "H" : [],
+}
+
+start_node = "A"
+target_node = "H"
+
+queue = [(0, start_node)]
+print(queue)
+heapq.heapify(queue)
+
+print(heapq.heappop(queue))
