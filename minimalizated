@@ -1,21 +1,76 @@
 import heapq
 
+class Graph:
+
+    def __init__(self, graph:dict, start:str, target:str):
+
+        self.graph = graph
+        self.start = start
+        self.target = target
+
+    # проверка каждой вершины
+        
+    def checking_vertices(self):
+
+        visited = set() # посещенные вершины
+        queue = [(self.start, 0)] # самый короткий путь и его конечная вершина 
+        paths = {} # словарь с путями
+        predecessors = {} # словарь с предшественниками-вершинами 
+
+        # заполнение словарей
+
+        paths = {vertex: float('inf') for vertex in self.graph} 
+        paths[self.start] = 0
+        predecessors = {vertex: None for vertex in self.graph}
+
+        # начало цикла
+
+        while queue:
+
+            current_path = queue[0][1]
+            current_ver = queue[0][0]
+            queue = []
+
+            print('=', current_ver)
+            if current_ver == self.target or self.graph[current_ver] is None:
+                print(current_ver)
+                continue
+
+            for vertex, path in self.graph[current_ver]:
+                visited.add(vertex)
+                over_path = current_path + path
+
+                if over_path < paths[vertex]:
+                    paths[vertex] = over_path
+                    predecessors[vertex] = current_ver
+            
+            queue.append(min(self.graph[current_ver]))
+
+        print(paths)
+            
+                
+
+
+    def get_short_path():
+        pass
+
+# входные данные
+    
 nodes = {
     "A" : [("B", 2), ("C", 9)],
     "B" : [("D", 1), ("E", 5), ("F", 9), ("G", 2)],
-    "C" : [("G", 1), ("F", 2)],
+    "C" : [("F", 2), ("G", 1)],
     "D" : [("H", 12), ("F", 8)],
     "E" : [("C", 2)],
     "F" : [("H", 12)],
     "G" : [("E", 2), ("C", 5)],
-    "H" : [],
+    "H" : None,
 }
 
 start_node = "A"
-target_node = "H"
+target_node = "E"
 
-queue = [(0, start_node)]
-print(queue)
-heapq.heapify(queue)
+# конец входных данных
 
-print(heapq.heappop(queue))
+test = Graph(nodes, start_node, target_node)
+test.checking_vertices()
